@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>官网伙伴——开发者导航 | IDE工具箱</title>
+    <meta name="keywords" content="开发者导航, 代码编辑器, 集成开发环境, 数据库工具, 版本控制, 代码协作工具, 开发工具, IDE工具箱"/>
+    <meta name="description" content="开发者导航 | IDE工具箱，提供各类代码编辑器、集成开发环境、数据库工具、版本控制系统和代码协作工具，帮助开发者高效编程。"/>
+    <meta property="og:title" content="开发者导航 - 代码编辑器、IDE、数据库工具、版本控制与代码协作工具"/>
+    <meta property="og:description" content="开发者导航 | IDE工具箱，提供各类代码编辑器、集成开发环境、数据库工具、版本控制系统和代码协作工具，帮助开发者高效编程。"/>
+    <meta property="og:image" content="https://gwhuoban.cn/img/xingqiu.png"/>
+    <meta property="og:url" content="https://gwhuoban.cn"/>
+    <link rel="shortcut icon" href="https://gwhuoban.cn/favicon.ico"/>
+    <link rel="apple-touch-icon" href="https://gwhuoban.cn/img/xingqiu.png"/>
+    <style>
+        :root {
+            --primary: #2c3e50; 
+            --accent: #3498db;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui;
+            margin: 0;
+            background: #f8f9fa;
+        }
+        .navbar {
+            background: var(--primary);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .ide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+        .ide-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .ide-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ide-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .tag {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+       #searchBox {
+            width: 100%;
+            padding: 12px;
+            margin: 1rem 0;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#editors" class="nav-link">代码编辑器</a></li>
+            <li><a href="#ides" class="nav-link">集成开发环境</a></li>
+            <li><a href="#database" class="nav-link">数据库工具</a></li>
+            <li><a href="#versionControl" class="nav-link">版本控制系统</a></li>
+            <li><a href="#codeCollaboration" class="nav-link">代码协作工具</a></li>
+            <li><a href="#commonSoftware" class="nav-link">常用软件</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <input type="text" id="searchBox" placeholder="搜索工具名称或类型...">
+
+        <div id="searchResults">
+            <h2>搜索结果</h2>
+            <div class="ide-grid" id="ideContainerSearchResults"></div>
+        </div>
+
+        <div id="editors">
+            <h2>代码编辑器</h2>
+            <div class="ide-grid" id="ideContainerEditors"></div>
+        </div>
+
+        <div id="ides">
+            <h2>集成开发环境</h2>
+            <div class="ide-grid" id="ideContainerIdes"></div>
+        </div>
+
+        <div id="database">
+            <h2>数据库工具</h2>
+            <div class="ide-grid" id="ideContainerDatabase"></div>
+        </div>
+
+        <div id="versionControl">
+            <h2>版本控制系统</h2>
+            <div class="ide-grid" id="ideContainerVersionControl"></div>
+        </div>
+
+        <div id="codeCollaboration">
+            <h2>代码协作工具</h2>
+            <div class="ide-grid" id="ideContainerCodeCollaboration"></div>
+        </div>
+
+        <div id="commonSoftware">
+            <h2>常用软件</h2>
+            <div class="ide-grid" id="ideContainerCommonSoftware"></div>
+        </div>
+    </div>
+
+    <script>
+
+        const ides = [
+            { 
+                name: "Visual Studio Code",
+                category: "editors",
+                url: "https://code.visualstudio.com",
+                tags: ["跨平台", "插件丰富", "免费"],
+                desc: "微软开发的轻量级代码编辑器"
+            },
+            {
+                name: "IntelliJ IDEA",
+                category: "ides",
+                url: "https://www.jetbrains.com/idea",
+                tags: ["Java", "智能补全", "付费/免费"],
+                desc: "最智能的Java集成开发环境"
+            },
+            {
+                name: "DataGrip",
+                category: "database",
+                url: "https://www.jetbrains.com/datagrip",
+                tags: ["SQL", "多数据库", "可视化"],
+                desc: "专业的数据库管理工具"
+            },
+            {
+                name: "PyCharm",
+                category: "ides",
+                url: "https://www.jetbrains.com/zh-cn/pycharm/",
+                tags: ["Python", "智能代码分析", "付费/免费"],
+                desc: "优秀的Python集成开发环境"
+            },
+            {
+                name: "Eclipse",
+                category: "ides",
+                url: "https://eclipseide.org/",
+                tags: ["Java", "插件丰富", "免费"],
+                desc: "强大的Java集成开发环境"
+            },
+            {
+                name: "Android Studio",
+                category: "ides",
+                url: "https://developer.android.com/studio",
+                tags: ["Android开发", "智能代码分析", "免费"],
+                desc: "用于Android开发的官方IDE"
+            },
+            {
+                name: "Sublime Text",
+                category: "editors",
+                url: "https://www.sublimetext.com/",
+                tags: ["跨平台", "快速", "付费/免费"],
+                desc: "轻量级且快速的代码编辑器"
+            },
+            {
+                name: "Atom",
+                category: "editors",
+                url: "https://atom.io/",
+                tags: ["跨平台", "插件丰富", "免费"],
+                desc: "GitHub开发的开源代码编辑器"
+            },
+            {
+                name: "WebStorm",
+                category: "ides",
+                url: "https://www.jetbrains.com/webstorm/",
+                tags: ["JavaScript", "智能补全", "付费/免费"],
+                desc: "强大的JavaScript集成开发环境"
+            },
+            {
+                name: "PhpStorm",
+                category: "ides",
+                url: "https://www.jetbrains.com/phpstorm/",
+                tags: ["PHP", "智能补全", "付费/免费"],
+                desc: "专业的PHP集成开发环境"
+            },
+            {
+                name: "Postman",
+                category: "database",
+                url: "https://www.postman.com/",
+                tags: ["API测试", "调试", "免费"],
+                desc: "用于API测试和调试的工具"
+            },
+            {
+                name: "MySQL Workbench",
+                category: "database",
+                url: "https://www.mysql.com/products/workbench/",
+                tags: ["MySQL", "可视化", "免费"],
+                desc: "MySQL的集成开发环境，支持数据建模、SQL开发和数据库管理"
+            },
+            {
+                name: "DBeaver",
+                category: "database",
+                url: "https://dbeaver.io/",
+                tags: ["多数据库", "插件丰富", "免费"],
+                desc: "用于数据库管理的通用工具"
+            },
+            {
+                name: "Fiddler",
+                category: "database",
+                url: "https://www.telerik.com/fiddler",
+                tags: ["网络调试", "Web开发", "免费"],
+                desc: "用于网络调试和分析的工具"
+            },
+            {
+                name: "Notepad++",
+                category: "editors",
+                url: "https://notepad-plus-plus.org/",
+                tags: ["跨平台", "轻量级", "免费"],
+                desc: "轻量级的源代码编辑器，主要用于编写源代码"
+            },
+            {
+                name: "CLion",
+                category: "ides",
+                url: "https://www.jetbrains.com/clion/",
+                tags: ["C/C++", "智能补全", "付费/免费"],
+                desc: "用于C/C++开发的强大IDE"
+            },
+            {
+                name: "RubyMine",
+                category: "ides",
+                url: "https://www.jetbrains.com/rubymine/",
+                tags: ["Ruby", "智能补全", "付费/免费"],
+                desc: "专业的Ruby集成开发环境"
+            },
+            {
+                name: "GoLand",
+                category: "ides",
+                url: "https://www.jetbrains.com/go/",
+                tags: ["Go", "智能补全", "付费/免费"],
+                desc: "专业的Go编程语言集成开发环境"
+            },
+            {
+                name: "Git",
+                category: "versionControl",
+                url: "https://git-scm.com/",
+                tags: ["版本控制", "开源", "免费"],
+                desc: "分布式版本控制系统"
+            },
+            {
+                name: "GitHub",
+                category: "codeCollaboration",
+                url: "https://github.com/",
+                tags: ["代码托管", "协作", "免费/付费"],
+                desc: "一个基于Git的代码托管平台，包含项目管理、版本控制和协作功能"
+            },
+            {
+                name: "GitLab",
+                category: "codeCollaboration",
+                url: "https://about.gitlab.com/",
+                tags: ["代码托管", "协作", "免费/付费"],
+                desc: "一个提供代码仓库托管、CI/CD等功能的软件开发平台"
+            },
+            {
+                name: "Bitbucket",
+                category: "codeCollaboration",
+                url: "https://bitbucket.org/",
+                tags: ["代码托管", "协作", "免费/付费"],
+                desc: "用于团队协作的代码托管库，支持Git和Mercurial"
+            },
+            {
+                name: "QQ",
+                category: "commonSoftware",
+                url: "https://im.qq.com/",
+                tags: ["即时通讯", "社交", "免费"],
+                desc: "腾讯QQ是一款即时通讯软件，支持文字、语音、视频聊天等多种通讯方式。"
+            },
+            {
+                name: "微信",
+                category: "commonSoftware",
+                url: "https://weixin.qq.com/",
+                tags: ["即时通讯", "社交", "免费"],
+                desc: "微信是一款集成了即时通讯、社交媒体、支付等多种功能的软件。"
+            },
+
+    {
+        name: "QQ",
+        category: "commonSoftware",
+        url: "https://im.qq.com/",
+        tags: ["即时通讯", "社交", "免费"],
+        desc: "腾讯QQ是一款即时通讯软件，支持文字、语音、视频聊天等多种通讯方式。"
+    },
+    {
+        name: "微信",
+        category: "commonSoftware",
+        url: "https://weixin.qq.com/",
+        tags: ["即时通讯", "社交", "免费"],
+        desc: "微信是一款集成了即时通讯、社交媒体、支付等多种功能的软件。"
+    },
+    {
+        name: "网易云音乐",
+        category: "commonSoftware",
+        url: "https://music.163.com/",
+        tags: ["音乐", "在线播放", "免费"],
+        desc: "网易云音乐是一款提供海量曲库、歌单、MV等功能的在线音乐播放器。"
+    },
+    {
+        name: "B站",
+        category: "commonSoftware",
+        url: "https://www.bilibili.com/",
+        tags: ["视频", "追剧", "直播", "免费"],
+        desc: "哔哩哔哩弹幕视频网，简称B站，是一个提供弹幕视频分享、直播等服务的平台。"
+    },
+    {
+        name: "抖音",
+        category: "commonSoftware",
+        url: "https://www.douyin.com/",
+        tags: ["短视频", "直播", "免费"],
+        desc: "抖音是一款集成了短视频播放、直播等功能的社交媒体应用。"
+    },
+    {
+        name: "淘宝",
+        category: "commonSoftware",
+        url: "https://www.taobao.com/",
+        tags: ["购物", "电商", "免费"],
+        desc: "淘宝是一个提供商品展示、在线购物等功能的电商平台。"
+    },
+    {
+        name: "京东",
+        category: "commonSoftware",
+        url: "https://www.jd.com/",
+        tags: ["购物", "电商", "免费"],
+        desc: "京东是一家提供商品展示、在线购物、快速配送等功能的电商平台。"
+    },
+    {
+        name: "爱奇艺",
+        category: "commonSoftware",
+        url: "https://www.iqiyi.com/",
+        tags: ["视频", "追剧", "免费/付费"],
+        desc: "爱奇艺是一款提供在线视频播放、追剧、直播等功能的平台。"
+    },
+    {
+        name: "腾讯视频",
+        category: "commonSoftware",
+        url: "https://v.qq.com/",
+        tags: ["视频", "追剧", "免费/付费"],
+        desc: "腾讯视频是一款提供海量视频内容、追剧、直播等功能的平台。"
+    },
+    {
+        name: "知乎",
+        category: "commonSoftware",
+        url: "https://www.zhihu.com/",
+        tags: ["资讯", "问答", "免费"],
+        desc: "知乎是一个提供资讯、问答、文章等内容分享的平台。"
+    },
+    {
+        name: "Microsoft Office",
+        category: "commonSoftware",
+        url: "https://products.office.com/zh-cn/",
+        tags: ["办公", "生产力", "付费"],
+        desc: "Microsoft Office是一套用于办公和生产力提升的软件套装，支持文档处理、表格和演示文稿制作。"
+    },
+    {
+        name: "腾讯网游加速器",
+        category: "commonSoftware",
+        url: "https://game.qq.com/accelerator/",
+        tags: ["游戏加速", "网络优化", "付费"],
+        desc: "腾讯网游加速器是一款帮助玩家减少游戏延迟、提高网络稳定性、改善游戏体验的工具。"
+    },
+    {
+        name: "迅游加速器",
+        category: "commonSoftware",
+        url: "https://www.xunyou.com/",
+        tags: ["游戏加速", "网络优化", "付费"],
+        desc: "迅游加速器是一款提供游戏加速、网络优化服务的工具，支持多种游戏平台。"
+    }
+
+];
+
+
+        function renderCards(category) {
+            const container = document.getElementById(`ideContainer${category.charAt(0).toUpperCase() + category.slice(1)}`);
+            container.innerHTML = '';
+
+            ides.filter(ide => ide.category === category).forEach(ide => {
+                const card = document.createElement('div');
+                card.className = 'ide-card';
+                card.innerHTML = `
+                    <h3><a href="${ide.url}" target="_blank">${ide.name}</a></h3>
+                    <p>${ide.desc}</p>
+                    <div class="ide-tags">
+                        ${ide.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderSearchResults(filterText) {
+            const container = document.getElementById('ideContainerSearchResults');
+            container.innerHTML = '';
+            ides.filter(ide => 
+                ide.name.toLowerCase().includes(filterText) ||
+                ide.tags.some(tag => tag.toLowerCase().includes(filterText))
+            ).forEach(ide => {
+                const card = document.createElement('div');
+                card.className = 'ide-card';
+                card.innerHTML = `
+                    <h3><a href="${ide.url}" target="_blank">${ide.name}</a></h3>
+                    <p>${ide.desc}</p>
+                    <div class="ide-tags">
+                        ${ide.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+
+        ['editors', 'ides', 'database', 'versionControl', 'codeCollaboration', 'commonSoftware'].forEach(category => renderCards(category));
+
+
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            const filterText = e.target.value.toLowerCase();
+            if (filterText) {
+                document.getElementById('editors').style.display = 'none';
+                document.getElementById('ides').style.display = 'none';
+                document.getElementById('database').style.display = 'none';
+                document.getElementById('versionControl').style.display = 'none';
+                document.getElementById('codeCollaboration').style.display = 'none';
+                document.getElementById('commonSoftware').style.display = 'none';
+                // 显示搜索结果标签
+                document.getElementById('searchResults').style.display = 'block';
+                renderSearchResults(filterText);
+            } else {
+                // 显示所有分类标签
+                document.getElementById('editors').style.display = 'block';
+                document.getElementById('ides').style.display = 'block';
+                document.getElementById('database').style.display = 'block';
+                document.getElementById('versionControl').style.display = 'block';
+                document.getElementById('codeCollaboration').style.display = 'block';
+                document.getElementById('commonSoftware').style.display = 'block';
+                // 隐藏搜索结果标签
+                document.getElementById('searchResults').style.display = 'none';
+                ['editors', 'ides', 'database', 'versionControl', 'codeCollaboration', 'commonSoftware'].forEach(category => renderCards(category));
+            }
+        });
+
+        // 导航链接平滑滚动
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
+
